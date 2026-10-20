@@ -1,0 +1,21 @@
+[
+  "backend/tests/test_api.py::test_api_health",
+  "backend/tests/test_api.py::test_dsa_explanations",
+  "backend/tests/test_api.py::test_import_validation",
+  "backend/tests/test_api.py::test_nationwide_station_search",
+  "backend/tests/test_api.py::test_nationwide_train_search",
+  "backend/tests/test_api.py::test_network_graph_route_bfs_and_dfs",
+  "backend/tests/test_api.py::test_platform_timeline_and_allocation",
+  "backend/tests/test_api.py::test_root_serves_frontend",
+  "backend/tests/test_api.py::test_simulate_manual_assignment",
+  "backend/tests/test_api.py::test_station_timetable_with_midnight_window",
+  "backend/tests/test_dsa.py::test_avoidable_waiting_analysis",
+  "backend/tests/test_dsa.py::test_graph_bfs_and_dfs",
+  "backend/tests/test_dsa.py::test_greedy_platform_allocation",
+  "backend/tests/test_dsa.py::test_interval_intersects_window_midnight",
+  "backend/tests/test_dsa.py::test_interval_overlap_detection",
+  "backend/tests/test_dsa.py::test_min_heap_priority_queue",
+  "backend/tests/test_dsa.py::test_overnight_window_detection",
+  "backend/tests/test_dsa.py::test_time_conversions",
+  "backend/tests/test_dsa.py::test_time_falls_in_window_midnight"
+]

@@ -1,0 +1,14 @@
+train_number,train_name,station_code,station_name,arrival,departure,halt_minutes,route_sequence,service_days,data_source,verified
+12951,Mumbai Tejas Rajdhani,MMCT,Mumbai Central,,17:00,0,1,MON-SUN,DEMO_VALIDATED_DATASET,false
+12951,Mumbai Tejas Rajdhani,ST,Surat,19:43,19:48,5,2,MON-SUN,DEMO_VALIDATED_DATASET,false
+12951,Mumbai Tejas Rajdhani,BRC,Vadodara,21:06,21:16,10,3,MON-SUN,DEMO_VALIDATED_DATASET,false
+12951,Mumbai Tejas Rajdhani,RTM,Ratlam,00:25,00:28,3,4,MON-SUN,DEMO_VALIDATED_DATASET,false
+12951,Mumbai Tejas Rajdhani,KOTA,Kota,03:15,03:20,5,5,MON-SUN,DEMO_VALIDATED_DATASET,false
+12951,Mumbai Tejas Rajdhani,NDLS,New Delhi,08:32,,0,6,MON-SUN,DEMO_VALIDATED_DATASET,false
+22436,Vande Bharat Express,NDLS,New Delhi,,06:00,0,1,TUE-SUN,DEMO_VALIDATED_DATASET,false
+22436,Vande Bharat Express,CNB,Kanpur Central,10:08,10:10,2,2,TUE-SUN,DEMO_VALIDATED_DATASET,false
+22436,Vande Bharat Express,BSB,Varanasi,14:00,,0,3,TUE-SUN,DEMO_VALIDATED_DATASET,false
+17015,Visakha Express,BBS,Bhubaneswar,,08:45,0,1,MON-SUN,DEMO_VALIDATED_DATASET,false
+17015,Visakha Express,BZA,Vijayawada,23:45,00:05,20,2,MON-SUN,DEMO_VALIDATED_DATASET,false
+17015,Visakha Express,GNT,Guntur,00:45,00:50,5,3,MON-SUN,DEMO_VALIDATED_DATASET,false
+17015,Visakha Express,SC,Secunderabad,07:30,,0,4,MON-SUN,DEMO_VALIDATED_DATASET,false

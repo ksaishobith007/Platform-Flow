@@ -1,0 +1,22 @@
+PlatformFlow updated prototype
+=============================
+
+Run the version currently being updated:
+1. Open the PlatformFlow folder in VS Code.
+2. Open index.html and use Live Server.
+3. The site should open at a local address such as http://127.0.0.1:5500/index.html.
+
+Implemented in this update:
+- Separate Overview, Train Management, Timetable & Status, and Station Master sections.
+- A shared station selector that updates the station name and configured platform count across views.
+- Train lookup using records entered in Train Management (not a live national train feed).
+- Platform overview visualization based on the selected station and calculated plan.
+- Originating trains prefer the last 2 platforms; destination/terminating trains prefer the last 3.
+- Five-minute planning buffer in platform occupancy conflict checks.
+- Prototype movement timing notes: 30-minute pre-entry target for originating trains and a 20-minute post-arrival maintenance estimate for destination trains.
+
+Important limitations:
+- The station data is marked needs_verification; confirm platform counts with official sources before relying on them.
+- Train records are manual/in-memory demo entries and reset on page reload.
+- There is no live railway timetable, occupancy, signalling, or dispatch connection.
+- Maintenance movement estimates are planning placeholders only, not operational instructions.

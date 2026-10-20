@@ -1,53 +1,32 @@
-# PlatformFlow – Railway Platform Allocation Planner 🚆
+# React + TypeScript + Vite
 
-## 📌 Project Overview
-PlatformFlow is a railway platform planning and operations simulation web application designed to visualize train schedules, manage platform allocation, detect scheduling conflicts, and support efficient railway station operations. The project demonstrates how Data Structures and Algorithms (DSA) can be applied to railway scheduling and resource management problems.
+This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
 
-## 🎯 Objectives
-- Visualize train schedules and platform occupancy.
-- Allocate platforms to trains based on scheduling requirements.
-- Identify overlapping train timings and platform conflicts.
-- Demonstrate algorithmic approaches to railway resource allocation.
-- Provide an interactive interface for railway operations planning.
+Currently, two official plugins are available:
 
-## ✨ Key Features
-- **Train Management:** View and manage train information.
-- **Platform Allocation:** Assign platforms to trains.
-- **Timetable and Status:** View train schedules and platform status.
-- **Conflict Detection:** Identify overlapping train schedules.
-- **Rake Sharing:** Simulate rake continuity and resource sharing.
-- **Station Management:** Organize station and platform information.
-- **Live Movement Simulation:** Display an animated train with a separate locomotive and passenger coaches.
-- **Interactive Dashboard:** Explore railway planning information through a web interface.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-## 🧠 DSA Concepts Used
+## React Compiler
 
-1. **Arrays and Lists:** Store and process train schedules, platform details, and related records.
-2. **Sorting Algorithms:** Arrange trains by arrival time, departure time, or other scheduling criteria.
-3. **Interval Overlap Detection:** Identify trains whose occupancy time intervals overlap on the same platform.
-4. **Greedy Algorithms:** Demonstrate platform allocation by selecting feasible resources based on scheduling constraints.
-5. **Searching:** Find train, platform, and station records.
-6. **Resource Allocation:** Assign limited platforms to trains while considering timing constraints.
-7. **Time Complexity Analysis:** Study how algorithm performance changes as the number of trains and platforms increases.
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## 🛠️ Technologies Used
-- HTML
-- CSS
-- JavaScript
-- Python for the backend components
-- React and Vite for the separate frontend application
+## Expanding the Oxlint configuration
 
-## 🚀 How to Run
-1. Download or clone this repository.
-2. Open the project folder.
-3. For the static version, open `PlatformFlow/index.html` in a web browser.
-4. For the frontend and backend versions, follow the instructions in the project documentation and install the required dependencies.
+If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
 
-## ⚠️ Disclaimer
-PlatformFlow is an educational prototype for railway scheduling and DSA demonstrations. It is not an official railway operations system and should not be used for real-world train dispatching or safety-critical platform allocation. Train schedules and operational results must be independently verified.
+```json
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["react", "typescript", "oxc"],
+  "options": {
+    "typeAware": true
+  },
+  "rules": {
+    "react/rules-of-hooks": "error",
+    "react/only-export-components": ["warn", { "allowConstantExport": true }]
+  }
+}
+```
 
-## 🎓 Academic Purpose
-This project demonstrates the practical application of Data Structures and Algorithms, web development, scheduling, conflict detection, and resource allocation in a railway operations scenario.
-
-## 👨‍💻 Project Repository
-**PlatformFlow – Railway Platform Allocation Planner**
+See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.

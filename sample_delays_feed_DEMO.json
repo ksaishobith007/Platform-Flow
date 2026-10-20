@@ -1,0 +1,29 @@
+[
+  {
+    "stationCode": "TPTY",
+    "trainNumber": "17015",
+    "expectedArrival": "16:45",
+    "expectedDeparture": "17:05",
+    "delayMinutes": 35,
+    "updatedAt": "2026-10-17T16:20:00+05:30",
+    "source": "SIMULATED_DEMO_FEED"
+  },
+  {
+    "stationCode": "NDLS",
+    "trainNumber": "12951",
+    "expectedArrival": "08:52",
+    "expectedDeparture": null,
+    "delayMinutes": 20,
+    "updatedAt": "2026-10-17T08:00:00+05:30",
+    "source": "SIMULATED_DEMO_FEED"
+  },
+  {
+    "stationCode": "CNB",
+    "trainNumber": "22436",
+    "expectedArrival": "10:18",
+    "expectedDeparture": "10:20",
+    "delayMinutes": 10,
+    "updatedAt": "2026-10-17T09:45:00+05:30",
+    "source": "SIMULATED_DEMO_FEED"
+  }
+]

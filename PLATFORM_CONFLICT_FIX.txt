@@ -1,0 +1,9 @@
+PlatformFlow updates
+
+1. Animated live 3D-style background retained (CSS animated perspective grid and moving glow).
+2. Platform allocation checks occupancy intervals and avoids assigning the same platform to overlapping trains at the same station.
+3. Station Master approval rejects a platform choice when it overlaps another train's allocated interval.
+4. Existing approved conflicts are flagged for review and their valid platform/time intervals remain reserved, preventing new trains from being allocated on top of them until the conflict is resolved.
+5. Rake-sharing rows show the arriving and departing service's independently assigned platform number when those services exist in the selected station plan. Otherwise, each service is shown as Not assigned. A rake link itself does not assign platforms.
+
+Important: This is a planning prototype. Platform counts, train times, rake relationships, clearance buffers, and every proposed assignment must be checked against authoritative railway data and operational rules before real-world use.

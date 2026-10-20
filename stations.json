@@ -1,0 +1,361 @@
+
+[
+  {
+    "code": "BZA",
+    "name": "Vijayawada Junction",
+    "state": "Andhra Pradesh",
+    "platform_count": 10,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "VSKP",
+    "name": "Visakhapatnam Junction",
+    "state": "Andhra Pradesh",
+    "platform_count": 8,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "TPTY",
+    "name": "Tirupati",
+    "state": "Andhra Pradesh",
+    "platform_count": 6,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "GTL",
+    "name": "Guntakal Junction",
+    "state": "Andhra Pradesh",
+    "platform_count": 7,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "OGL",
+    "name": "Ongole",
+    "state": "Andhra Pradesh",
+    "platform_count": 5,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "RJY",
+    "name": "Rajahmundry",
+    "state": "Andhra Pradesh",
+    "platform_count": 3,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "NLR",
+    "name": "Nellore",
+    "state": "Andhra Pradesh",
+    "platform_count": 4,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "VZM",
+    "name": "Vizianagaram Junction",
+    "state": "Andhra Pradesh",
+    "platform_count": 5,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "RU",
+    "name": "Renigunta Junction",
+    "state": "Andhra Pradesh",
+    "platform_count": 5,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "GNT",
+    "name": "Guntur Junction",
+    "state": "Andhra Pradesh",
+    "platform_count": 7,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "SC",
+    "name": "Secunderabad Junction",
+    "state": "Telangana",
+    "platform_count": 10,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "HYB",
+    "name": "Hyderabad Deccan (Nampally)",
+    "state": "Telangana",
+    "platform_count": 6,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "KCG",
+    "name": "Kacheguda",
+    "state": "Telangana",
+    "platform_count": 5,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "CHZ",
+    "name": "Charlapalli",
+    "state": "Telangana",
+    "platform_count": 9,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "LPI",
+    "name": "Lingampalli",
+    "state": "Telangana",
+    "platform_count": 5,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "BMT",
+    "name": "Begumpet",
+    "state": "Telangana",
+    "platform_count": 2,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "KZJ",
+    "name": "Kazipet Junction",
+    "state": "Telangana",
+    "platform_count": 3,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "WL",
+    "name": "Warangal",
+    "state": "Telangana",
+    "platform_count": 4,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "KMT",
+    "name": "Khammam",
+    "state": "Telangana",
+    "platform_count": 3,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "NZB",
+    "name": "Nizamabad",
+    "state": "Telangana",
+    "platform_count": 3,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "MAS",
+    "name": "Chennai Central",
+    "state": "Tamil Nadu",
+    "platform_count": 12,
+    "platform_count_note": "PDF lists 12 (2A)",
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "MS",
+    "name": "Chennai Egmore",
+    "state": "Tamil Nadu",
+    "platform_count": 11,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "TBM",
+    "name": "Tambaram",
+    "state": "Tamil Nadu",
+    "platform_count": 8,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "AJJ",
+    "name": "Arakkonam Junction",
+    "state": "Tamil Nadu",
+    "platform_count": 8,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "CGL",
+    "name": "Chengalpattu Junction",
+    "state": "Tamil Nadu",
+    "platform_count": 7,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "KPD",
+    "name": "Katpadi Junction",
+    "state": "Tamil Nadu",
+    "platform_count": 5,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "CBE",
+    "name": "Coimbatore Junction",
+    "state": "Tamil Nadu",
+    "platform_count": 6,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "ED",
+    "name": "Erode Junction",
+    "state": "Tamil Nadu",
+    "platform_count": 4,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "TPJ",
+    "name": "Tiruchirappalli Junction",
+    "state": "Tamil Nadu",
+    "platform_count": 8,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "MDU",
+    "name": "Madurai Junction",
+    "state": "Tamil Nadu",
+    "platform_count": 7,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "SBC",
+    "name": "KSR Bengaluru City",
+    "state": "Karnataka",
+    "platform_count": 10,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "YPR",
+    "name": "Yesvantpur Junction",
+    "state": "Karnataka",
+    "platform_count": 6,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "BNC",
+    "name": "Bengaluru Cantonment",
+    "state": "Karnataka",
+    "platform_count": 4,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "KJM",
+    "name": "Krishnarajapuram",
+    "state": "Karnataka",
+    "platform_count": 4,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "SMVB",
+    "name": "SMVT Bengaluru",
+    "state": "Karnataka",
+    "platform_count": 5,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "MYS",
+    "name": "Mysuru Junction",
+    "state": "Karnataka",
+    "platform_count": 6,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "UBL",
+    "name": "Hubballi Junction",
+    "state": "Karnataka",
+    "platform_count": 8,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "DWR",
+    "name": "Dharwad",
+    "state": "Karnataka",
+    "platform_count": 4,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "BGM",
+    "name": "Belagavi",
+    "state": "Karnataka",
+    "platform_count": 4,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "MAQ",
+    "name": "Mangaluru Central",
+    "state": "Karnataka",
+    "platform_count": 5,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "TVC",
+    "name": "Thiruvananthapuram Central",
+    "state": "Kerala",
+    "platform_count": 5,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "KCVL",
+    "name": "Kochuveli",
+    "state": "Kerala",
+    "platform_count": 6,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "ERS",
+    "name": "Ernakulam Junction",
+    "state": "Kerala",
+    "platform_count": 6,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "ERN",
+    "name": "Ernakulam Town",
+    "state": "Kerala",
+    "platform_count": 4,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "QLN",
+    "name": "Kollam Junction",
+    "state": "Kerala",
+    "platform_count": 6,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "ALLP",
+    "name": "Alappuzha",
+    "state": "Kerala",
+    "platform_count": 3,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "KTYM",
+    "name": "Kottayam",
+    "state": "Kerala",
+    "platform_count": 6,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "TCR",
+    "name": "Thrissur",
+    "state": "Kerala",
+    "platform_count": 4,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "CLT",
+    "name": "Kozhikode",
+    "state": "Kerala",
+    "platform_count": 4,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "CAN",
+    "name": "Kannur",
+    "state": "Kerala",
+    "platform_count": 4,
+    "data_status": "needs_verification"
+  },
+  {
+    "code": "PDY",
+    "name": "Puducherry (Pondy)",
+    "state": "Puducherry",
+    "platform_count": 5,
+    "data_status": "needs_verification"
+  }
+]
