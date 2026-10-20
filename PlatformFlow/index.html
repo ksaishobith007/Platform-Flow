@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PlatformFlow | Railway Operations Planner</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="loginGate" class="login-gate">
+    <div class="login-scene" aria-label="Cinematic night view of a train at Tirupati station"><div class="login-scene-overlay"><span class="scene-live-dot"></span> RAILWAY OPERATIONS · TIRUPATI</div><div class="login-scene-caption"><strong>Plan. Coordinate. Optimize.</strong><span>Station operations, platform occupancy and rake continuity.</span></div></div>
+    <form id="loginForm" class="login-card">
+      <div class="brand-icon login-brand-icon">PF</div>
+      <p class="eyebrow">RAILWAY OPERATIONS WORKSPACE</p>
+      <h1>Welcome to PlatformFlow</h1>
+      <p class="login-copy" id="authSubtitle">Sign in or create an account to open the station planning dashboard.</p>
+      <div class="auth-tabs" role="tablist" aria-label="Account access">
+        <button type="button" class="auth-tab active" id="showSignIn">Sign in</button>
+        <button type="button" class="auth-tab" id="showSignUp">Sign up</button>
+      </div>
+      <div class="auth-form">
+        <label>Railway ID card number<input id="loginUsername" autocomplete="username" required placeholder="Enter Railway ID card number"></label>
+        <div id="signupDetails" hidden>
+          <label>Railway zone<input id="railwayZone" autocomplete="organization" placeholder="e.g. Southern Railway"></label>
+          <label>Division<input id="railwayDivision" placeholder="e.g. Chennai Division"></label>
+          <label>Mobile number linked to your ID<input id="railwayMobile" type="tel" inputmode="numeric" autocomplete="tel" placeholder="Enter mobile number"></label>
+        </div>
+        <div id="passwordWrap"><label>Password<input id="loginPassword" type="password" autocomplete="current-password" minlength="6" required placeholder="Enter password (6+ characters)"></label></div>
+        <div id="confirmPasswordWrap" hidden><label>Confirm password<input id="confirmPassword" type="password" autocomplete="new-password" minlength="6" placeholder="Re-enter password"></label></div>
+        <button type="submit" id="authSubmit">Sign in</button>
+        <p id="loginMessage" class="login-message" aria-live="polite"></p>
+      </div>
+      <p class="auth-note"><strong>Important prototype limitation</strong><br><small>This is a local student-demo login. Accounts are saved in this browser only; they are not verified against official Railway employee records and cannot be used as secure production authentication. Do not enter real Railway ID or sensitive personal details.</small></p>
+    </form>
+  </div>
+  <div id="platformApp" class="platform-app is-locked">
+  <header class="topbar">
+    <a class="brand brand-link" href="#" data-view-link="home" aria-label="PlatformFlow home">
+      <div class="brand-icon">PF</div>
+      <div><h1>PlatformFlow</h1><p>Railway Operations Planner</p></div>
+    </a>
+    <div class="header-right"><span class="header-status">PLATFORM PLANNING</span> <button type="button" id="logoutButton" class="logout-button">Sign out</button></div>
+  </header>
+
+  <nav class="main-nav" aria-label="Main navigation">
+    <button class="nav-link active" type="button" data-view-link="home">Overview</button>
+    <button class="nav-link" type="button" data-view-link="management">Train Management</button>
+    <button class="nav-link" type="button" data-view-link="timetable">Timetable & Status</button>
+    <button class="nav-link" type="button" data-view-link="station-master">Station Master</button>
+  </nav>
+
+  <main class="container">
+    <section class="station-toolbar">
+      <div><span class="eyebrow">CURRENT CONTROL STATION</span><strong id="selectedStationHeading">Loading station…</strong><small id="selectedStationMeta">Choose a station to update all dashboard views.</small></div>
+      <label class="station-picker-label">Select station
+        <select id="mainStationSelect" aria-label="Select station"></select>
+      </label>
+    </section>
+
+    <section class="view-panel active" data-view="home">
+      <section class="intro">
+        <p class="eyebrow">STATION CONTROL DASHBOARD</p>
+        <h2>Plan smarter. Reduce avoidable waiting.</h2>
+        <p>One station selection. A clearer view of train plans, platform capacity and conflicts.</p>
+      </section>
+      <section class="notice notice-compact"><strong>Planning data:</strong> Train entries are manually entered, and station counts should be verified. Live railway status and actual platform occupancy are not connected.</section>
+      <section class="panel interval-planner">
+        <div class="panel-heading"><div><p class="eyebrow">TIME-WINDOW PLANNER</p><h2>Plan platform allocation</h2><p>Select the operating day and time interval to view trains expected during that period.</p></div></div>
+        <form id="homePlanForm" class="form-grid plan-window-form">
+          <label>Operating day<select id="planDay" required>
+            <option value="MON">Monday</option><option value="TUE">Tuesday</option><option value="WED">Wednesday</option><option value="THU">Thursday</option><option value="FRI">Friday</option><option value="SAT">Saturday</option><option value="SUN">Sunday</option>
+          </select></label>
+          <label>Window starts<input id="planStartTime" type="time" value="04:00" required></label>
+          <label>Window ends<input id="planEndTime" type="time" value="08:00" required></label>
+          <div class="form-submit"><button type="submit">Show trains & allocate</button></div>
+        </form>
+        <p id="homePlanMessage" class="message" aria-live="polite">Choose a day and time window to filter the current station plan.</p>
+      </section>
+
+      <section class="metrics">
+        <article class="metric"><p>Trains in plan</p><h3 id="trainCount">0</h3><small>Across the current plan</small></article>
+        <article class="metric"><p>Delayed trains</p><h3 id="delayCount">0</h3><small>Manual delay updates</small></article>
+        <article class="metric metric-highlight"><p>Total platforms at station</p><h3 id="availableCount">—</h3><small id="platformCountNote">From station dataset</small></article>
+        <article class="metric"><p>Conflicts detected</p><h3 id="conflictCount">0</h3><small>Needs staff review</small></article>
+      </section>
+
+      <section class="home-grid home-grid-platform-only">
+        <article class="panel visual-panel visual-panel-full">
+          <div class="panel-heading"><div><p class="eyebrow">PLATFORM VIEW</p><h2>Station platform overview</h2><p>Illustrative allocation view for the selected station.</p></div><span class="live-pill"><span></span> Plan preview</span></div>
+          <div id="platformVisual" class="platform-visual"><p class="empty-state">Loading station platform layout…</p></div>
+          <div class="legend"><span><i class="legend-free"></i> No planned train</span><span><i class="legend-used"></i> Train assigned</span><span><i class="legend-conflict"></i> Conflict</span></div>
+        </article>
+      </section>
+      <section class="panel quick-actions">
+        <div><p class="eyebrow">NEXT STEP</p><h2>Manage the plan</h2><p>Add trains once, then use the same records in the timetable and allocation views.</p></div>
+        <button type="button" data-view-link="management">Open Train Management →</button>
+      </section>
+    </section>
+
+    <section class="view-panel" data-view="management">
+      <section class="page-title"><p class="eyebrow">OPERATIONS WORKSPACE</p><h2>Train Management</h2><p>Add a train once, remove records, and update revised arrival times.</p></section>
+      <section class="panel">
+        <div class="panel-heading"><div><h2>Add train to the plan</h2><p>The station follows the single station selector at the top of the page.</p></div></div>
+        <form id="trainEntryForm" class="form-grid">
+          <label>Station code<input id="entryStationCode" value="BZA" maxlength="8" placeholder="e.g. BZA" required><small id="entryStationName" aria-live="polite">Loading station name…</small></label>
+          <label>Train number<input type="text" id="entryTrainNumber" inputmode="numeric" pattern="[0-9]{1,5}" title="Enter 1 to 5 digits" placeholder="e.g. 12797" required></label>
+          <label>Train name<input id="entryTrainName" maxlength="100" placeholder="e.g. Demonstration Express" required></label>
+          <label>Movement type<select id="entryMovementType" required><option value="originating">Originating</option><option value="intermediate" selected>Intermediate halt</option><option value="destination">Destination / terminating</option></select></label>
+          <fieldset class="day-selector"><legend>Operating days</legend>
+            <label><input type="checkbox" name="serviceDay" value="MON" checked> Mon</label>
+            <label><input type="checkbox" name="serviceDay" value="TUE" checked> Tue</label>
+            <label><input type="checkbox" name="serviceDay" value="WED" checked> Wed</label>
+            <label><input type="checkbox" name="serviceDay" value="THU" checked> Thu</label>
+            <label><input type="checkbox" name="serviceDay" value="FRI" checked> Fri</label>
+            <label><input type="checkbox" name="serviceDay" value="SAT" checked> Sat</label>
+            <label><input type="checkbox" name="serviceDay" value="SUN" checked> Sun</label>
+          </fieldset>
+          <label>Expected arrival / planned time<input id="entryArrival" type="time" required></label>
+          <label>Occupancy / halt (minutes)<input id="entryHaltMinutes" type="number" min="1" max="1440" value="20" required></label>
+          <label>Priority<select id="entryPriority" required><option value="high">High</option><option value="medium" selected>Medium</option><option value="normal">Normal</option></select></label>
+          <div class="form-submit"><button type="submit">Add train to plan</button></div>
+        </form>
+        <p id="entryMessage" class="message" aria-live="polite">Add trains to create your platform allocation plan.</p>
+        <div class="table-wrap"><table><thead><tr><th>Train number</th><th>Train name</th><th>Station</th><th>Movement</th><th>Expected time</th><th>Operating days</th><th>Occupancy</th><th>Priority</th><th>Action</th></tr></thead><tbody id="entryTrainTable"><tr><td colspan="9" class="empty">No trains added yet.</td></tr></tbody></table></div>
+        <div class="allocation-action"><button id="allocatePlatformsButton" type="button">Predict platform allocation</button><p id="allocationMessage" class="message" aria-live="polite">Add trains, then run the allocation algorithm.</p></div>
+      </section>
+      <section class="panel">
+        <div class="panel-heading"><div><h2>Update train delay</h2><p>Enter a revised arrival time for an existing train in the plan.</p></div></div>
+        <form id="delayForm" class="form-grid delay-grid">
+          <label>Train number<input id="delayTrainNumber" maxlength="10" placeholder="Existing train number" required></label>
+          <label>Revised expected arrival<input id="revisedArrival" type="time" required></label>
+          <label>Update notes<input id="delayReason" maxlength="200" placeholder="e.g. Reported 25 min late"></label>
+          <div class="form-submit"><button type="submit">Update delay & recalculate</button></div>
+        </form>
+        <p id="delayMessage" class="message" aria-live="polite">Add a train first before entering its delay.</p>
+      </section>
+    </section>
+
+    <section class="view-panel" data-view="timetable">
+      <section class="panel rake-panel">
+        <div class="panel-heading"><div><p class="eyebrow">RAKE CONTINUITY</p><h2>Rake-sharing connections</h2><p>Link an arriving train to its next departing service when the same rake is reused. These are planning records only and must be verified by railway staff.</p></div></div>
+        <form id="rakeSharingForm" class="form-grid rake-entry-grid">
+          <label>Arriving train number<input id="rakeArrivingTrain" inputmode="numeric" maxlength="10" placeholder="e.g. 16219" required></label>
+          <label>Arriving train name<input id="rakeArrivingName" maxlength="100" placeholder="e.g. CMNR TPTY Express" required></label>
+          <label>Station code<input id="rakeStationCode" maxlength="8" value="TPTY" placeholder="e.g. TPTY" required></label>
+          <label>Arrival time<input id="rakeArrivalTime" type="time" value="04:05" required></label>
+          <label>Next departing train number<input id="rakeDepartingTrain" inputmode="numeric" maxlength="10" placeholder="e.g. 16204" required></label>
+          <label>Departing train name<input id="rakeDepartingName" maxlength="100" placeholder="e.g. Chennai-bound service" required></label>
+          <label>Departure time<input id="rakeDepartureTime" type="time" value="06:30" required></label>
+          <label>Rake ID / number<input id="rakeId" maxlength="40" placeholder="Enter verified rake ID" required></label>
+          <label>Turnaround buffer (minutes)<input id="rakeBufferMinutes" type="number" min="0" max="360" value="20" required></label>
+          <div class="form-submit"><button type="submit">Save rake-sharing link</button></div>
+        </form>
+        <p id="rakeSharingMessage" class="message" aria-live="polite">Enter both services and save the link. Records are stored in this browser only.</p>
+        <div class="table-wrap"><table><thead><tr><th>Arriving service</th><th>Arrival at station</th><th>Next departing service</th><th>Departure</th><th>Turnaround window</th><th>Rake ID</th><th>Planning status</th><th>Action</th></tr></thead><tbody id="rakeSharingTable"><tr><td colspan="8" class="empty">No rake-sharing links saved yet.</td></tr></tbody></table></div>
+        <p class="rake-note">Rake-sharing links are planning records only. Verify train details and rake identity with authorized railway records. A rake link does not mean both services occupy the same platform; calculate each train's actual platform-occupancy interval separately.</p>
+      </section>
+      <section class="page-title"><p class="eyebrow">SERVICE OVERVIEW</p><h2>Timetable & Status</h2><p>Filter the shared train plan by station and time window. The board includes estimated platform release and current allocation status.</p></section>
+      <section class="panel">
+        <form id="searchForm" class="form-grid search-grid">
+          <label>Station code<input id="stationCode" value="BZA" maxlength="8" placeholder="e.g. BZA" required></label>
+          <label>Window starts<input id="startTime" type="time" value="04:00" required></label>
+          <label>Window ends<input id="endTime" type="time" value="08:00" required></label>
+          <div class="form-submit"><button type="submit">Search trains</button></div>
+        </form>
+        <p id="searchMessage" class="message" aria-live="polite">Add trains above to populate the movement board.</p>
+        <div class="table-wrap"><table><thead><tr><th>Train number</th><th>Train name</th><th>Scheduled time</th><th>Expected arrival / planned time</th><th>Estimated departure / release</th><th>Platform</th><th>Delay</th><th>Role</th></tr></thead><tbody id="trainTable"><tr><td colspan="8" class="empty">No trains loaded yet.</td></tr></tbody></table></div>
+      </section>
+    </section>
+
+    <section class="view-panel" data-view="station-master">
+      <section class="page-title"><p class="eyebrow">REVIEW & APPROVAL</p><h2>Station Master Controls</h2><p>Review suggested allocations and manually approve a feasible platform assignment.</p></section>
+      <section class="notice notice-compact"><strong>Staff review:</strong> Recommendations are planning estimates only and do not authorize train movements, signalling, dispatch, or maintenance-yard movements.</section>
+      <section class="panel">
+        <div class="panel-heading"><div><h2>Recommended platform allocation</h2><p>Use the suggested platform or select another feasible platform. Originating trains prefer the last two platforms; destination trains prefer the last three, with fallback when needed.</p></div></div>
+        <div class="table-wrap"><table><thead><tr><th>Train</th><th>Arrival / planned time</th><th>Estimated entry</th><th>Recommended platform</th><th>Priority</th><th>Status</th><th>Station master action</th></tr></thead><tbody id="allocationTable"><tr><td colspan="7" class="empty">No allocation calculated yet.</td></tr></tbody></table></div>
+        <p id="approvalMessage" class="message" aria-live="polite">Platform recommendations require station-master review.</p>
+      </section>
+      <section class="panel"><div class="panel-heading"><div><h2>Movement planning rules</h2><p>Configurable prototype estimates—not real operational instructions.</p></div></div>
+        <div class="rules-grid">
+          <article><span class="rule-number">01</span><h3>Originating</h3><p>Prefer the last two platforms. Default planned platform-entry target: 30 minutes before the entered planned time.</p></article>
+          <article><span class="rule-number">02</span><h3>Destination</h3><p>Prefer the last three platforms. Default maintenance-movement estimate: 20 minutes after the entered arrival time.</p></article>
+          <article><span class="rule-number">03</span><h3>Intermediate</h3><p>Use normal platform allocation and the entered occupancy duration. A 5-minute planning buffer is applied between occupancy intervals.</p></article>
+        </div>
+      </section>
+    </section>
+
+    <footer>PlatformFlow is a student decision-support prototype. Station counts and train records require verification; actual railway operation must rely on authorized systems and railway staff.</footer>
+  </main>
+  </div>
+  <div class="pf-global-motion" aria-hidden="true"><span class="pf-motion-label"><i></i> LIVE MOVEMENT SIMULATION</span><div class="pf-motion-rail"><span class="pf-motion-sleeper"></span><span class="pf-motion-sleeper"></span><span class="pf-motion-sleeper"></span><span class="pf-motion-sleeper"></span><span class="pf-motion-sleeper"></span><span class="pf-motion-sleeper"></span><span class="pf-motion-sleeper"></span><span class="pf-motion-sleeper"></span><span class="pf-motion-sleeper"></span><span class="pf-motion-sleeper"></span><span class="pf-motion-train" aria-label="Animated passenger train"><span class="pf-coach"><i></i><i></i><b></b></span><span class="pf-coach"><i></i><i></i><b></b></span><span class="pf-coach"><i></i><i></i><b></b></span><span class="pf-coach"><i></i><i></i><b></b></span><span class="pf-engine"><span class="pf-engine-window"></span><span class="pf-engine-light"></span></span></span></div><span class="pf-motion-status">TRAIN IN MOTION</span></div>
+  <script src="js/app.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>

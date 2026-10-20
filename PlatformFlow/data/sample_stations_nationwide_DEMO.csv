@@ -1,0 +1,15 @@
+code,name,zone,state,platform_count
+NDLS,New Delhi,NR,Delhi,16
+CSMT,Chhatrapati Shivaji Maharaj Terminus,CR,Maharashtra,18
+HWH,Howrah Junction,ER,West Bengal,23
+MAS,Chennai Central,SR,Tamil Nadu,12
+SBC,KSR Bengaluru,SWR,Karnataka,10
+TPTY,Tirupati,SCR,Andhra Pradesh,6
+PUNE,Pune Junction,CR,Maharashtra,6
+CNB,Kanpur Central,NCR,Uttar Pradesh,10
+BSB,Varanasi Junction,NR,Uttar Pradesh,9
+ADI,Ahmedabad Junction,WR,Gujarat,12
+BPL,Bhopal Junction,WCR,Madhya Pradesh,6
+HYB,Hyderabad Deccan,SCR,Telangana,6
+GHY,Guwahati,NFR,Assam,7
+TVC,Thiruvananthapuram Central,SR,Kerala,5

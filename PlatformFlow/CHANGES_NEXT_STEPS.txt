@@ -1,0 +1,44 @@
+PlatformFlow update notes
+
+Changes in this package
+- Overview header now says PLATFORM PLANNING instead of STUDENT PROTOTYPE.
+- The large home-page prototype warning is now a compact planning-data note. A safety notice remains in Station Master because this project is not connected to live railway operations.
+- Station selection uses the supplied station data and configured platform counts. BZA is configured as 10 platforms in data/stations.json; these station values are marked for official verification.
+- Timetable & Status now shows estimated departure/release time and the current proposed/approved platform alongside the train details.
+- Station Master allocation rows are limited to the currently selected station.
+- Added explicit ✓ Approve and ✕ Reject actions. Rejection marks the proposal for revision; approval still checks platform occupancy conflicts.
+- Platform view uses stronger 3D depth, track lanes, layered shadows and dark railway-control styling.
+- Originating trains reserve a planning window 30 minutes before the entered planned departure; destination trains reserve arrival plus 20 minutes for the planned platform-clearance window; intermediate trains use the entered halt duration. A 5-minute planning buffer remains.
+
+Run the project
+1. Extract the ZIP folder.
+2. Open the PlatformFlow folder in VS Code.
+3. Open index.html and choose Open with Live Server (or right-click index.html > Open with Live Server).
+4. Choose a station from the top selector. To check Vijayawada, select BZA — Vijayawada Junction (10 platforms).
+5. Open Train Management, add a train, and click Predict platform allocation.
+6. Open Station Master to review the selected station's proposals and use ✓ Approve or ✕ Reject.
+7. Open Timetable & Status to view entered trains and their estimated release/platform data.
+
+Important limitations
+- The app currently keeps manually entered trains in browser memory; refreshing the page clears them.
+- Timetable departure/release values are planning estimates derived from the entered time and movement type, not official live train schedules.
+- Station platform counts are supplied dataset values and should be verified against official railway records.
+- The app does not authorize actual train movements, signalling, dispatch, or yard/maintenance movements.
+
+Additional update in this ZIP
+- Added an Overview time-window planner with operating day, start time and end time.
+- Added operating-day selection to manual train entry (one or more days per service).
+- The platform overview filters the selected station's saved plan to the chosen day and time window.
+- Manually entered trains, delays, and station-master approval status are saved in this browser using localStorage and restored after refresh.
+- Station records use platform_count, including BZA=10, when stations.json loads correctly.
+
+Storage limitation
+- Browser storage is local to this browser/profile/computer. It is not shared across computers and is not a substitute for station-master login or server-side shared storage. The existing FastAPI/SQLite backend is not yet connected to this static HTML page for manual train-entry persistence or authentication.
+
+
+Additional requested visual/login update
+- Added a dark, layered 3D-inspired control-room background and platform visualization styling.
+- Removed the train quick-lookup card from the Home page and expanded the station platform overview to full width.
+- Added a demo login screen and sign-out button.
+- Demo credentials: stationmaster / platformflow123.
+- IMPORTANT: This login is a front-end demonstration only. It is not secure authentication and does not provide shared accounts or cross-computer storage. Before real deployment, implement server-side password hashing, authenticated API routes, user roles, and a shared database.
