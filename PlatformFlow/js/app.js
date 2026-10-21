@@ -291,7 +291,11 @@ async function restoreManualTrains() {
   if (window.platformFlowCloud) {
     cloudState = await window.platformFlowCloud.loadState();
   }
-  const selectedTrains = cloudState && Array.isArray(cloudState.trains) ? cloudState.trains : localSaved;
+  const cloudTrains = cloudState && Array.isArray(cloudState.trains) ? cloudState.trains : [];
+  // If this account has an empty cloud row but this browser has older records,
+  // keep those records and migrate them instead of replacing them with an empty list.
+  const migrateLocalToEmptyCloud = Boolean(cloudState && cloudTrains.length === 0 && localSaved.length > 0);
+  const selectedTrains = cloudState && cloudTrains.length > 0 ? cloudTrains : localSaved;
   trains.splice(0, trains.length, ...selectedTrains);
   nextTrainId = trains.reduce((max, train) => Math.max(max, Number(train.id) || 0), 0) + 1;
 
@@ -302,9 +306,15 @@ async function restoreManualTrains() {
     } catch (error) {
       console.warn("Cloud data loaded, but local cache could not be updated.", error);
     }
+    if (migrateLocalToEmptyCloud) {
+      await window.platformFlowCloud.saveState({
+        trains,
+        rake_links: readRakeSharingLinks()
+      });
+    }
   } else if (window.platformFlowCloud && (localSaved.length > 0)) {
     // Migrate existing browser-only train records into the signed-in user's cloud state.
-    window.platformFlowCloud.saveState({ trains, rake_links: readRakeSharingLinks() });
+    await window.platformFlowCloud.saveState({ trains, rake_links: readRakeSharingLinks() });
   }
 }
 
