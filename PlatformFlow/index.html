@@ -30,7 +30,7 @@
         <button type="submit" id="authSubmit">Sign in</button>
         <p id="loginMessage" class="login-message" aria-live="polite"></p>
       </div>
-      <p class="auth-note"><strong>Important prototype limitation</strong><br><small>This is a local student-demo login. Accounts are saved in this browser only; they are not verified against official Railway employee records and cannot be used as secure production authentication. Do not enter real Railway ID or sensitive personal details.</small></p>
+      <p class="auth-note"><strong>Prototype notice</strong><br><small>PlatformFlow uses Supabase authentication for this demo. The Railway ID is used as a login label, not verified against official Railway employee records. Do not enter real Railway credentials or sensitive personal details.</small></p>
     </form>
   </div>
   <div id="platformApp" class="platform-app is-locked">
@@ -189,6 +189,8 @@
   </main>
   </div>
   <div class="pf-global-motion" aria-hidden="true"><span class="pf-motion-label"><i></i> LIVE MOVEMENT SIMULATION</span><div class="pf-motion-rail"><span class="pf-motion-sleeper"></span><span class="pf-motion-sleeper"></span><span class="pf-motion-sleeper"></span><span class="pf-motion-sleeper"></span><span class="pf-motion-sleeper"></span><span class="pf-motion-sleeper"></span><span class="pf-motion-sleeper"></span><span class="pf-motion-sleeper"></span><span class="pf-motion-sleeper"></span><span class="pf-motion-sleeper"></span><span class="pf-motion-train" aria-label="Animated passenger train"><span class="pf-coach"><i></i><i></i><b></b></span><span class="pf-coach"><i></i><i></i><b></b></span><span class="pf-coach"><i></i><i></i><b></b></span><span class="pf-coach"><i></i><i></i><b></b></span><span class="pf-engine"><span class="pf-engine-window"></span><span class="pf-engine-light"></span></span></span></div><span class="pf-motion-status">TRAIN IN MOTION</span></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/cloud.js"></script>
   <script src="js/app.js"></script>
   <script src="js/login.js"></script>
 </body>
