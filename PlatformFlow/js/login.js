@@ -132,6 +132,7 @@
         }
         showMessage('Account created. Your cloud account is ready.', true);
         unlockApp();
+        if (window.platformFlowReloadCloudState) await window.platformFlowReloadCloudState();
         return;
       }
 
@@ -139,6 +140,7 @@
       if (error) throw error;
       showMessage('');
       unlockApp();
+      if (window.platformFlowReloadCloudState) await window.platformFlowReloadCloudState();
     } catch (error) {
       showMessage(error.message || 'Authentication failed. Check your Railway ID and password.');
     } finally {
