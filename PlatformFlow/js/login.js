@@ -72,9 +72,26 @@
       lockApp();
       return;
     }
-    const { data, error } = await client.auth.getSession();
-    if (!error && data.session) unlockApp();
-    else lockApp();
+
+    try {
+      const { data, error } = await client.auth.getSession();
+      if (error) throw error;
+
+      if (data.session) {
+        unlockApp();
+        // app.js can start before Supabase finishes restoring the saved session.
+        // Reload after auth is ready so this device fetches the user's shared data.
+        if (window.platformFlowReloadCloudState) {
+          await window.platformFlowReloadCloudState();
+        }
+      } else {
+        lockApp();
+      }
+    } catch (error) {
+      console.error('Could not restore PlatformFlow session:', error);
+      lockApp();
+      showMessage('Could not restore your cloud session. Please sign in again.');
+    }
   }
   restoreSession();
 
