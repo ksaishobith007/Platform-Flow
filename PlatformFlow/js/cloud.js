@@ -29,7 +29,7 @@
         console.error("Could not load shared PlatformFlow data:", error.message);
         return null;
       }
-      return data || { trains: [], rake_links: [] };
+      return data || null;
     },
     async saveState(state) {
       const user = await this.currentUser();
