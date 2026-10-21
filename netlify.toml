@@ -1,0 +1,20 @@
+# Deploy the HTML/JavaScript PlatformFlow app that contains the shared Supabase login.
+# The repository-root React app uses a separate /api backend and cannot run by itself
+# on static hosting, so Netlify should publish this static app instead.
+[build]
+  base = "PlatformFlow"
+  publish = "."
+  command = "echo 'Deploying PlatformFlow static app'"
+
+# Keep backend implementation files and the local SQLite database out of public URLs.
+[[redirects]]
+  from = "/backend/*"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/supabase_setup.sql"
+  to = "/404.html"
+  status = 404
+  force = true
