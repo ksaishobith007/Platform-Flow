@@ -1654,6 +1654,16 @@ $("searchForm")?.addEventListener("submit", event => {
   renderTrains();
 });
 
+window.platformFlowReloadCloudState = async function () {
+  await restoreManualTrains();
+  ensureRakeDepartureRecords();
+  calculateAllocations();
+  renderStationOptions();
+  updateEntryStationName();
+  renderAll();
+  renderRakeSharingLinks();
+};
+
 loadStations().then(async () => {
   await restoreManualTrains();
   ensureRakeDepartureRecords();
