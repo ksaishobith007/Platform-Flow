@@ -270,16 +270,41 @@ function saveManualTrains() {
   } catch (error) {
     console.warn("Could not save train records in this browser.", error);
   }
+  if (window.platformFlowCloud) {
+    window.platformFlowCloud.saveState({
+      trains,
+      rake_links: typeof readRakeSharingLinks === "function" ? readRakeSharingLinks() : []
+    });
+  }
 }
 
-function restoreManualTrains() {
+async function restoreManualTrains() {
+  let localSaved = [];
   try {
     const saved = JSON.parse(localStorage.getItem(TRAIN_STORAGE_KEY) || "[]");
-    if (!Array.isArray(saved)) return;
-    trains.splice(0, trains.length, ...saved);
-    nextTrainId = trains.reduce((max, train) => Math.max(max, Number(train.id) || 0), 0) + 1;
+    if (Array.isArray(saved)) localSaved = saved;
   } catch (error) {
-    console.warn("Saved train records could not be restored.", error);
+    console.warn("Local train records could not be restored.", error);
+  }
+
+  let cloudState = null;
+  if (window.platformFlowCloud) {
+    cloudState = await window.platformFlowCloud.loadState();
+  }
+  const selectedTrains = cloudState && Array.isArray(cloudState.trains) ? cloudState.trains : localSaved;
+  trains.splice(0, trains.length, ...selectedTrains);
+  nextTrainId = trains.reduce((max, train) => Math.max(max, Number(train.id) || 0), 0) + 1;
+
+  if (cloudState) {
+    try {
+      localStorage.setItem(TRAIN_STORAGE_KEY, JSON.stringify(trains));
+      localStorage.setItem(RAKE_SHARING_STORAGE_KEY, JSON.stringify(Array.isArray(cloudState.rake_links) ? cloudState.rake_links : []));
+    } catch (error) {
+      console.warn("Cloud data loaded, but local cache could not be updated.", error);
+    }
+  } else if (window.platformFlowCloud && (localSaved.length > 0)) {
+    // Migrate existing browser-only train records into the signed-in user's cloud state.
+    window.platformFlowCloud.saveState({ trains, rake_links: readRakeSharingLinks() });
   }
 }
 
@@ -1442,6 +1467,9 @@ function readRakeSharingLinks() {
 }
 function saveRakeSharingLinks(links) {
   localStorage.setItem(RAKE_SHARING_STORAGE_KEY, JSON.stringify(links));
+  if (window.platformFlowCloud) {
+    window.platformFlowCloud.saveState({ trains, rake_links: links });
+  }
 }
 
 // Repair older saved rake links on startup: a link may exist in localStorage
@@ -1626,8 +1654,8 @@ $("searchForm")?.addEventListener("submit", event => {
   renderTrains();
 });
 
-loadStations().then(() => {
-  restoreManualTrains();
+loadStations().then(async () => {
+  await restoreManualTrains();
   ensureRakeDepartureRecords();
   calculateAllocations();
   renderStationOptions();
