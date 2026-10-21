@@ -4,6 +4,7 @@
   const form = document.getElementById('loginForm');
   if (!gate || !app || !form) return;
 
+  const client = window.platformFlowSupabase;
   const usernameInput = document.getElementById('loginUsername');
   const passwordInput = document.getElementById('loginPassword');
   const confirmInput = document.getElementById('confirmPassword');
@@ -19,10 +20,25 @@
   const signUpTab = document.getElementById('showSignUp');
   let mode = 'signin';
 
-  const getUsers = () => {
-    try { return JSON.parse(localStorage.getItem('platformflow.accounts') || '{}'); }
-    catch { return {}; }
-  };
+  function railwayIdToEmail(value) {
+    const id = value.trim().toLowerCase();
+    return id.replace(/[^a-z0-9._+-]/g, '') + '@platformflow.app';
+  }
+
+  function showMessage(text, isSuccess = false) {
+    message.textContent = text;
+    message.style.color = isSuccess ? '#8df0e1' : '';
+  }
+
+  function unlockApp() {
+    gate.hidden = true;
+    app.classList.remove('is-locked');
+  }
+
+  function lockApp() {
+    gate.hidden = false;
+    app.classList.add('is-locked');
+  }
 
   const setMode = (nextMode) => {
     mode = nextMode;
@@ -40,69 +56,94 @@
     confirmInput.value = '';
     submit.textContent = signingUp ? 'Create account' : 'Sign in with password';
     subtitle.textContent = signingUp
-      ? 'Create a local demo account using your Railway ID number and a password.'
-      : 'Enter your Railway ID card number and password to open the station planning dashboard.';
+      ? 'Create your PlatformFlow account using a Railway ID label and password.'
+      : 'Enter the same Railway ID and password on each device.';
     signInTab.classList.toggle('active', !signingUp);
     signUpTab.classList.toggle('active', signingUp);
-    message.textContent = '';
-    message.style.color = '';
+    showMessage('');
   };
 
   signInTab.addEventListener('click', () => setMode('signin'));
   signUpTab.addEventListener('click', () => setMode('signup'));
 
-  if (sessionStorage.getItem('platformflow.demoSignedIn') === 'yes') {
-    gate.hidden = true;
-    app.classList.remove('is-locked');
+  async function restoreSession() {
+    if (!client) {
+      showMessage('Cloud login could not start. Refresh the page and check the Supabase connection.');
+      lockApp();
+      return;
+    }
+    const { data, error } = await client.auth.getSession();
+    if (!error && data.session) unlockApp();
+    else lockApp();
   }
+  restoreSession();
 
   const logoutButton = document.getElementById('logoutButton');
-  if (logoutButton) logoutButton.addEventListener('click', () => {
-    sessionStorage.removeItem('platformflow.demoSignedIn');
-    gate.hidden = false;
-    app.classList.add('is-locked');
+  if (logoutButton) logoutButton.addEventListener('click', async () => {
+    if (client) await client.auth.signOut();
+    lockApp();
     form.reset();
     setMode('signin');
   });
 
-  function maskMobile(mobile) {
-    if (!mobile) return 'the saved mobile number';
-    return mobile.length > 4 ? `${'*'.repeat(Math.max(0, mobile.length - 4))}${mobile.slice(-4)}` : mobile;
-  }
-
-  form.addEventListener('submit', (event) => {
+  form.addEventListener('submit', async (event) => {
     event.preventDefault();
-    const id = usernameInput.value.trim();
-    const password = passwordInput.value;
-    const users = getUsers();
-    if (id.length < 3) { message.textContent = 'Enter a valid Railway ID card number.'; return; }
-
-    if (mode === 'signup') {
-      const mobile = mobileInput.value.trim();
-      if (!zoneInput.value.trim() || !divisionInput.value.trim()) { message.textContent = 'Enter both railway zone and division.'; return; }
-      if (!/^\+?[0-9\s()-]{10,16}$/.test(mobile)) { message.textContent = 'Enter a valid mobile number (10–16 digits, optionally with country code).'; return; }
-      if (password.length < 6) { message.textContent = 'Password must contain at least 6 characters.'; return; }
-      if (users[id]) { message.textContent = 'This Railway ID already has a local demo account. Please sign in.'; return; }
-      if (password !== confirmInput.value) { message.textContent = 'Passwords do not match.'; return; }
-      users[id] = { password, zone: zoneInput.value.trim(), division: divisionInput.value.trim(), mobile };
-      try { localStorage.setItem('platformflow.accounts', JSON.stringify(users)); }
-      catch { message.textContent = 'Could not save account in this browser. Check browser storage settings.'; return; }
-      message.style.color = '#8df0e1';
-      message.textContent = 'Local demo account created. You can now sign in using your Railway ID and password.';
-      form.reset();
-      setMode('signin');
-      usernameInput.value = id;
-      message.style.color = '#8df0e1';
-      message.textContent = 'Account created. Enter your password and select Sign in.';
+    if (!client) {
+      showMessage('Cloud login is unavailable. Please refresh the page.');
       return;
     }
+    const id = usernameInput.value.trim();
+    const password = passwordInput.value;
+    if (id.length < 3) { showMessage('Enter a valid Railway ID card number.'); return; }
+    if (password.length < 6) { showMessage('Password must contain at least 6 characters.'); return; }
 
-    const user = users[id];
-    if (!user) { message.textContent = 'No local demo account found for this Railway ID. Select Sign up first.'; return; }
-    if (!password || password !== user.password) { message.textContent = 'Incorrect password. Please try again or create an account if you have not signed up.'; return; }
-    sessionStorage.setItem('platformflow.demoSignedIn', 'yes');
-    message.textContent = '';
-    gate.hidden = true;
-    app.classList.remove('is-locked');
+    submit.disabled = true;
+    submit.textContent = mode === 'signup' ? 'Creating account…' : 'Signing in…';
+    try {
+      const email = railwayIdToEmail(id);
+      if (mode === 'signup') {
+        const mobile = mobileInput.value.trim();
+        if (!zoneInput.value.trim() || !divisionInput.value.trim()) {
+          showMessage('Enter both railway zone and division.');
+          return;
+        }
+        if (!/^\+?[0-9\s()-]{10,16}$/.test(mobile)) {
+          showMessage('Enter a valid mobile number (10–16 digits, optionally with country code).');
+          return;
+        }
+        if (password !== confirmInput.value) {
+          showMessage('Passwords do not match.');
+          return;
+        }
+        const { data, error } = await client.auth.signUp({
+          email,
+          password,
+          options: { data: {
+            railway_id_label: id,
+            railway_zone: zoneInput.value.trim(),
+            railway_division: divisionInput.value.trim(),
+            railway_mobile: mobile
+          }}
+        });
+        if (error) throw error;
+        if (!data.session) {
+          showMessage('Account request created. Supabase email confirmation is enabled; disable email confirmation in Supabase Auth settings for this Railway-ID-only demo, or configure a real email sign-in.', false);
+          return;
+        }
+        showMessage('Account created. Your cloud account is ready.', true);
+        unlockApp();
+        return;
+      }
+
+      const { error } = await client.auth.signInWithPassword({ email, password });
+      if (error) throw error;
+      showMessage('');
+      unlockApp();
+    } catch (error) {
+      showMessage(error.message || 'Authentication failed. Check your Railway ID and password.');
+    } finally {
+      submit.disabled = false;
+      submit.textContent = mode === 'signup' ? 'Create account' : 'Sign in with password';
+    }
   });
 })();
